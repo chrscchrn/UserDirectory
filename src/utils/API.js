@@ -8,8 +8,7 @@ export default {
                 const results = data.results.map( obj => {
                     return {
                         image: obj.picture.thumbnail,
-                        first: obj.name.first,
-                        last: obj.name.last,
+                        name: `${obj.name.first} ${obj.name.last}`,
                         phone: obj.phone,
                         email: obj.email,
                         dob: obj.dob.date

@@ -10,7 +10,8 @@ import './App.css';
 function App() {
 
   const [employees, setEmployees] = useState([]);
-  const [employeeSearch, setEmployeeSearch] = useState([])
+  const [employeeSearch, setEmployeeSearch] = useState([]);
+  const [ascending, setOrderBy] = useState(true);
 
   useEffect(() => {
       API.getRandomUser()
@@ -21,13 +22,33 @@ function App() {
           .catch(err => console.log(err));
   }, []) 
 
+  const handleInputChange = (event) => {
+    event.persist()
+    let value = event.target.value;
+    setEmployeeSearch(
+      employees.filter(obj => {
+        return (obj.name.includes(value)) ? true : false;
+      })
+    )
+  };
+
+  const handleSortButton = () => {
+    setOrderBy(!ascending);
+    if (ascending) employeeSearch.sort((a, b) => a.name > b.name ? 1 : -1);
+    if (!ascending) employeeSearch.sort((a, b) => a.name < b.name ? 1 : -1);
+  }
+
   return (
     <>
       <Head />
-      <Search />
-      <ResultsDiv employees={employees}/>
+      <Search handleInputChange={handleInputChange}/>
+      <ResultsDiv 
+        employees={employees} 
+        employeeSearch={employeeSearch} 
+        handleInputChange={handleInputChange}
+        handleSortButton={handleSortButton}
+      />
       <Foot />
-      {console.log(employees[0])}
     </>
   );
 }

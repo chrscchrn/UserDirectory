@@ -1,16 +1,12 @@
 import React from 'react';
 
-export default function Search() {
-
-    handleInputChange = event => {
-        let value = event.target.value;
-    };
-
-
+export default function Search(props) {
 
     return (
-        <>
-            <input placeholder="Search"></input>
-        </>
+        <form>
+            <form className="search">
+                <input placeholder="Search" onChange={props.handleInputChange}></input>
+            </form>
+        </form>
     );
 }
